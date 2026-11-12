@@ -2,3 +2,12 @@
 .vscode/
 Thumbs.db
 .DS_Store
+
+# Microsoft Office lock/temp files
+~$*
+
+# Local database backups
+database/backups/
+
+# Logs
+*.log
