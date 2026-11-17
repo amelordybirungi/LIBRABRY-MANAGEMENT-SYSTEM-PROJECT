@@ -333,10 +333,7 @@ input:focus, select:focus, textarea:focus { outline: 2px solid #0e7490; border-c
 /* dashboard greeting */
 .page-greeting { margin-bottom: 2px; }
 .page-date { color: #64748b; font-size: .9rem; margin-bottom: 22px; }
-<<<<<<< HEAD
 .page-date time { display: block; }
-=======
->>>>>>> 7c794f68c02dd4ad8dd351b3b3e2318287546479
 
 /* ---- Login page (split-screen card) ---- */
 .auth-page {
