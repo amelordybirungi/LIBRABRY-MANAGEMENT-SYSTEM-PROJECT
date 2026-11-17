@@ -1,30 +1,29 @@
 (function () {
     'use strict';
 
-<<<<<<< HEAD
     // ---- Dashboard clock: keep the displayed date and time current
     var liveClock = document.querySelector('[data-live-clock]');
     if (liveClock) {
-        var clockFormatter = new Intl.DateTimeFormat(undefined, {
-            weekday: 'long',
-            day: 'numeric',
-            month: 'long',
-            year: 'numeric',
+        var timeFormatter = new Intl.DateTimeFormat(undefined, {
             hour: 'numeric',
             minute: '2-digit',
             second: '2-digit'
         });
+        var dateFormatter = new Intl.DateTimeFormat(undefined, {
+            weekday: 'long',
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric'
+        });
         function updateClock() {
             var now = new Date();
             liveClock.dateTime = now.toISOString();
-            liveClock.textContent = clockFormatter.format(now);
+            liveClock.textContent = timeFormatter.format(now) + ' | ' + dateFormatter.format(now);
         }
         updateClock();
         window.setInterval(updateClock, 1000);
     }
 
-=======
->>>>>>> 7c794f68c02dd4ad8dd351b3b3e2318287546479
     // ---- Flash toasts: slide out and remove themselves after a few seconds
     document.querySelectorAll('.toast').forEach(function (toast) {
         setTimeout(function () {

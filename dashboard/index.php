@@ -40,15 +40,11 @@ require_once __DIR__ . '/../includes/header.php';
 ?>
 
 <h1 class="page-greeting">Welcome back, <?= e($_SESSION['full_name'] ?? 'User') ?></h1>
-<<<<<<< HEAD
 <p class="page-date">
     <time id="currentDateTime" datetime="<?= e(date(DATE_ATOM)) ?>" data-live-clock>
-        <?= e(date('l, j F Y g:i:s A')) ?>
+        <?= e(date('g:i:s A')) ?> | <?= e(date('l, j F Y')) ?>
     </time>
 </p>
-=======
-<p class="page-date"><?= date('l, j F Y') ?></p>
->>>>>>> 7c794f68c02dd4ad8dd351b3b3e2318287546479
 
 <div class="stats-h stats-h-img">
     <div class="stat-h teal">
