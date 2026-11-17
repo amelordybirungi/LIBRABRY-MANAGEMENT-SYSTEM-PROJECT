@@ -14,6 +14,7 @@ it includes role-based access and a live statistics dashboard.
 - Members management with profile photo upload
 - Loans: issue books, record returns and track overdue items
 - Search across the catalogue
+- low-stock badges to the books list: books with 1 copy available show “Low stock,” and books with 0 copies available show “Out of stock.
 - Dashboard with live statistics (total books, members, books out, overdue)
 - Responsive layout that works on desktop and mobile
 
