@@ -3,8 +3,13 @@
 require_once __DIR__ . '/../includes/auth_check.php';
 require_once __DIR__ . '/../config/database.php';
 
+<<<<<<< HEAD
 if (($_SESSION['role'] ?? '') !== 'admin') {
     set_message('Only admins can manage users.', 'danger');
+=======
+if (!is_super_admin()) {
+    set_message('Only the super admin can edit users.', 'danger');
+>>>>>>> 7c794f68c02dd4ad8dd351b3b3e2318287546479
     header('Location: ../dashboard/index.php');
     exit;
 }

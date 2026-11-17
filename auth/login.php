@@ -20,7 +20,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $error = 'Please enter both username and password.';
     } else {
         // Find the user with a PREPARED STATEMENT (the ? keeps input out of the SQL)
+<<<<<<< HEAD
         $stmt = $pdo->prepare('SELECT id, password, full_name, role
+=======
+        $stmt = $pdo->prepare('SELECT id, username, password, full_name, role
+>>>>>>> 7c794f68c02dd4ad8dd351b3b3e2318287546479
                                FROM users WHERE username = ?');
         $stmt->execute([$username]);
         $user = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -30,6 +34,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             session_regenerate_id(true);           // fresh session ID (security)
 
             $_SESSION['user_id']   = $user['id'];
+<<<<<<< HEAD
+=======
+            $_SESSION['username']  = $user['username'];
+>>>>>>> 7c794f68c02dd4ad8dd351b3b3e2318287546479
             $_SESSION['full_name'] = $user['full_name'];
             $_SESSION['role']      = $user['role'];
 

@@ -1,6 +1,7 @@
 (function () {
     'use strict';
 
+<<<<<<< HEAD
     // ---- Dashboard clock: keep the displayed date and time current
     var liveClock = document.querySelector('[data-live-clock]');
     if (liveClock) {
@@ -22,6 +23,8 @@
         window.setInterval(updateClock, 1000);
     }
 
+=======
+>>>>>>> 7c794f68c02dd4ad8dd351b3b3e2318287546479
     // ---- Flash toasts: slide out and remove themselves after a few seconds
     document.querySelectorAll('.toast').forEach(function (toast) {
         setTimeout(function () {

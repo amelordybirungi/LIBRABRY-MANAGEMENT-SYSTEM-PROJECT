@@ -28,7 +28,11 @@ require_once __DIR__ . '/../includes/header.php';
     <table>
         <thead>
             <tr>
+<<<<<<< HEAD
                 <th>Title</th>
+=======
+                <th>Title name</th>
+>>>>>>> 7c794f68c02dd4ad8dd351b3b3e2318287546479
                 <th>Author</th>
                 <th>Category</th>
                 <th>Year</th>

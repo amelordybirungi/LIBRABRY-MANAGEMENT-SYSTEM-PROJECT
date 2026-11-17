@@ -54,13 +54,21 @@ require_once __DIR__ . '/../includes/header.php';
     </p>
 <?php else: ?>
     <p class="text-muted" style="margin-bottom:12px;">
+<<<<<<< HEAD
          <?= count($members) ?> member<?= count($members) === 1 ? '' : 's' ?><?= $filtering ? ' (filtered)' : '' ?>.
+=======
+          <?= count($members) ?> member<?= count($members) === 1 ? '' : 's' ?><?= $filtering ? ' (filtered)' : '' ?>.
+>>>>>>> 7c794f68c02dd4ad8dd351b3b3e2318287546479
     </p>
     <table>
         <thead>
             <tr>
                 <th>Photo</th>
+<<<<<<< HEAD
                 <th>Member #</th>
+=======
+                <th>Member-ID</th>
+>>>>>>> 7c794f68c02dd4ad8dd351b3b3e2318287546479
                 <th>Name</th>
                 <th>Email</th>
                 <th>Phone</th>

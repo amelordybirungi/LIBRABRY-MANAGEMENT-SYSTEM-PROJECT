@@ -21,9 +21,23 @@ require_once __DIR__ . '/../includes/header.php';
 
 <div class="toolbar">
     <h1>Users</h1>
+<<<<<<< HEAD
     <a class="btn" href="create.php">+ Add User</a>
 </div>
 
+=======
+    <?php if (is_super_admin()): ?>
+        <a class="btn" href="create.php">+ Add User</a>
+    <?php endif; ?>
+</div>
+
+<?php if (!is_super_admin()): ?>
+    <p class="text-muted" style="margin-bottom:12px;">
+        Only the super admin (username <b>admin</b>) can add, edit or delete users.
+    </p>
+<?php endif; ?>
+
+>>>>>>> 7c794f68c02dd4ad8dd351b3b3e2318287546479
 <?php if (count($users) === 0): ?>
     <p class="text-muted">No users yet. Click “Add User” to create one.</p>
 <?php else: ?>
@@ -49,7 +63,22 @@ require_once __DIR__ . '/../includes/header.php';
                     </td>
                     <td><?= e($row['created_at']) ?></td>
                     <td>
+<<<<<<< HEAD
                         <a class="btn btn-small" href="edit.php?id=<?= (int) $row['id'] ?>">Edit</a>
+=======
+                        <?php if (is_super_admin()): ?>
+                            <a class="btn btn-small" href="edit.php?id=<?= (int) $row['id'] ?>">Edit</a>
+                            <?php if ($row['username'] !== 'admin' && (int) $row['id'] !== (int) ($_SESSION['user_id'] ?? 0)): ?>
+                                <form method="post" action="delete.php" style="display:inline"
+                                      onsubmit="return confirm('Delete this user? This cannot be undone.');">
+                                    <input type="hidden" name="id" value="<?= (int) $row['id'] ?>">
+                                    <button type="submit" class="btn btn-small btn-danger">Delete</button>
+                                </form>
+                            <?php endif; ?>
+                        <?php else: ?>
+                            <span class="text-muted">&mdash;</span>
+                        <?php endif; ?>
+>>>>>>> 7c794f68c02dd4ad8dd351b3b3e2318287546479
                     </td>
                 </tr>
             <?php endforeach; ?>
