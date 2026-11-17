@@ -1,207 +1,217 @@
--- =====================================================================
---  Library Management System - library_db.sql
---  This file creates the database, creates all 6 tables,
---  and inserts sample data.
---  How to use: phpMyAdmin -> Import -> choose this file -> Go
--- =====================================================================
 
+-- Library Management System database and sample data.
+-- Import this file through phpMyAdmin or run it with MySQL.
+CREATE DATABASE IF NOT EXISTS `library_db`
+  CHARACTER SET utf8mb4
+  COLLATE utf8mb4_general_ci;
+USE `library_db`;
 
--- ---------------------------------------------------------------------
--- STEP 1: Create the database (only if it does not exist yet)
---         and tell MySQL we want to work inside it.
--- ---------------------------------------------------------------------
-CREATE DATABASE IF NOT EXISTS library_db
-    CHARACTER SET utf8mb4
-    COLLATE utf8mb4_general_ci;
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+DROP TABLE IF EXISTS `authors`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `authors` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(150) NOT NULL,
+  `country` varchar(100) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
-USE library_db;
+LOCK TABLES `authors` WRITE;
+/*!40000 ALTER TABLE `authors` DISABLE KEYS */;
+INSERT INTO `authors` (`id`, `name`, `country`, `created_at`) VALUES
+(1,'Stephen King','United States','2026-11-09 14:17:43'),
+(2,'Shirley Jackson','United States','2026-11-09 14:17:43'),
+(3,'Silvia Moreno-Garcia','Mexico','2026-11-09 14:17:43'),
+(4,'James Clear','United States','2026-11-09 14:17:43'),
+(5,'Cal Newport','United States','2026-11-09 14:17:43'),
+(6,'J.R.R. Tolkien','United Kingdom','2026-11-09 14:17:43'),
+(7,'Brandon Sanderson','United States','2026-11-09 14:17:43'),
+(8,'Gregory Maguire','United States','2026-11-09 14:17:43'),
+(9,'Susan Kay','United Kingdom','2026-11-09 14:17:43'),
+(10,'Taylor Jenkins Reid','United States','2026-11-09 14:17:43'),
+(11,'Colleen Hoover','United States','2026-11-09 14:17:43');
+/*!40000 ALTER TABLE `authors` ENABLE KEYS */;
+UNLOCK TABLES;
+DROP TABLE IF EXISTS `books`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `books` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `isbn` varchar(20) NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `author_id` int(11) NOT NULL,
+  `category_id` int(11) NOT NULL,
+  `publisher` varchar(150) NOT NULL,
+  `year_published` int(11) NOT NULL,
+  `total_copies` int(11) NOT NULL DEFAULT 1,
+  `available_copies` int(11) NOT NULL DEFAULT 1,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `isbn` (`isbn`),
+  KEY `fk_books_authors` (`author_id`),
+  KEY `fk_books_categories` (`category_id`),
+  CONSTRAINT `fk_books_authors` FOREIGN KEY (`author_id`) REFERENCES `authors` (`id`) ON UPDATE CASCADE,
+  CONSTRAINT `fk_books_categories` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`) ON UPDATE CASCADE,
+  CONSTRAINT `chk_year_published` CHECK (`year_published` > 0),
+  CONSTRAINT `chk_total_copies` CHECK (`total_copies` >= 0),
+  CONSTRAINT `chk_available_copies_min` CHECK (`available_copies` >= 0),
+  CONSTRAINT `chk_available_copies_max` CHECK (`available_copies` <= `total_copies`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
+LOCK TABLES `books` WRITE;
+/*!40000 ALTER TABLE `books` DISABLE KEYS */;
+INSERT INTO `books` (`id`, `isbn`, `title`, `author_id`, `category_id`, `publisher`, `year_published`, `total_copies`, `available_copies`, `created_at`) VALUES
+(1,'9780385086950','Carrie',1,1,'Doubleday',1974,4,3,'2026-11-09 14:17:43'),
+(2,'9780385121675','The Shining',1,1,'Doubleday',1977,3,2,'2026-11-09 14:17:43'),
+(3,'9780143039983','The Haunting of Hill House',2,1,'Penguin Classics',1959,2,2,'2026-11-09 14:17:43'),
+(4,'9780525620785','Mexican Gothic',3,1,'Del Rey',2020,3,2,'2026-11-09 14:17:43'),
+(5,'9780735211292','Atomic Habits',4,3,'Avery',2018,5,4,'2026-11-09 14:17:43'),
+(6,'9781455586691','Deep Work',5,3,'Grand Central Publishing',2016,4,3,'2026-11-09 14:17:43'),
+(7,'9780547928227','The Hobbit',6,2,'Houghton Mifflin',1937,3,2,'2026-11-09 14:17:43'),
+(8,'9780765311788','Mistborn: The Final Empire',7,2,'Tor Books',2006,2,2,'2026-11-09 14:17:43'),
+(9,'9780060987107','Wicked: The Life and Times of the Wicked Witch of the West',8,2,'ReganBooks',1995,2,2,'2026-11-09 14:17:43'),
+(10,'9780440210306','Phantom',9,4,'Dell',1990,3,2,'2026-11-09 14:17:43'),
+(11,'9781501161933','The Seven Husbands of Evelyn Hugo',10,4,'Atria Books',2017,5,4,'2026-11-09 14:17:43'),
+(12,'9781501110368','It Ends with Us',11,4,'Atria Books',2016,4,4,'2026-11-09 14:17:43');
+/*!40000 ALTER TABLE `books` ENABLE KEYS */;
+UNLOCK TABLES;
+DROP TABLE IF EXISTS `categories`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `categories` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(100) NOT NULL,
+  `description` text DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- ---------------------------------------------------------------------
--- STEP 2: Delete old tables (if any) so we can re-import cleanly.
---         Order matters: delete "child" tables (loans, books)
---         before the "parent" tables they point to.
--- ---------------------------------------------------------------------
-DROP TABLE IF EXISTS loans;
-DROP TABLE IF EXISTS books;
-DROP TABLE IF EXISTS authors;
-DROP TABLE IF EXISTS categories;
-DROP TABLE IF EXISTS members;
-DROP TABLE IF EXISTS users;
+LOCK TABLES `categories` WRITE;
+/*!40000 ALTER TABLE `categories` DISABLE KEYS */;
+INSERT INTO `categories` (`id`, `name`, `description`, `created_at`) VALUES
+(1,'Horror','Gothic, psychological and supernatural horror fiction.','2026-11-09 14:17:43'),
+(2,'Fantasy','Epic and imaginative fantasy worlds and adventures.','2026-11-09 14:17:43'),
+(3,'Self-Help & Productivity','Personal development, habits and focused work.','2026-11-09 14:17:43'),
+(4,'Romance & Drama','Relationships, emotional conflict and dramatic storytelling.','2026-11-09 14:17:43'),
+(5,'Science Fiction','Speculative fiction exploring future technology, space and science.','2026-11-09 16:04:40'),
+(6,'Mystery & Thriller','Suspenseful crime, detective and psychological thriller stories.','2026-11-09 16:04:40');
+/*!40000 ALTER TABLE `categories` ENABLE KEYS */;
+UNLOCK TABLES;
+DROP TABLE IF EXISTS `loans`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `loans` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `member_id` int(11) NOT NULL,
+  `book_id` int(11) NOT NULL,
+  `date_issued` date NOT NULL,
+  `due_date` date NOT NULL,
+  `date_returned` date DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`),
+  KEY `idx_loans_member` (`member_id`),
+  KEY `idx_loans_book` (`book_id`),
+  KEY `idx_loans_status` (`date_returned`),
+  CONSTRAINT `fk_loans_books` FOREIGN KEY (`book_id`) REFERENCES `books` (`id`) ON UPDATE CASCADE,
+  CONSTRAINT `fk_loans_members` FOREIGN KEY (`member_id`) REFERENCES `members` (`id`) ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
+LOCK TABLES `loans` WRITE;
+/*!40000 ALTER TABLE `loans` DISABLE KEYS */;
+INSERT INTO `loans` (`id`, `member_id`, `book_id`, `date_issued`, `due_date`, `date_returned`, `created_at`) VALUES
+(1,1,5,'2026-11-06','2026-11-20',NULL,'2026-11-09 14:17:43'),
+(2,2,7,'2026-10-28','2026-11-11',NULL,'2026-11-09 14:17:43'),
+(3,6,4,'2026-11-02','2026-11-16',NULL,'2026-11-09 14:17:43'),
+(4,3,1,'2026-10-20','2026-11-03',NULL,'2026-11-09 14:17:43'),
+(5,5,2,'2026-10-15','2026-10-29',NULL,'2026-11-09 14:17:43'),
+(6,8,8,'2026-09-10','2026-09-24','2026-09-22','2026-11-09 14:17:43'),
+(7,9,12,'2026-10-01','2026-10-15','2026-10-14','2026-11-09 14:17:43'),
+(8,14,6,'2026-11-07','2026-11-21',NULL,'2026-11-09 16:04:40'),
+(9,15,11,'2026-11-04','2026-11-18',NULL,'2026-11-09 16:04:40'),
+(10,16,10,'2026-10-22','2026-11-05',NULL,'2026-11-09 16:04:40'),
+(11,2,9,'2026-09-20','2026-10-04','2026-10-02','2026-11-09 16:04:40');
+/*!40000 ALTER TABLE `loans` ENABLE KEYS */;
+UNLOCK TABLES;
+DROP TABLE IF EXISTS `members`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `members` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `member_number` varchar(50) NOT NULL,
+  `full_name` varchar(150) NOT NULL,
+  `email` varchar(150) NOT NULL,
+  `phone` varchar(30) NOT NULL,
+  `photo` varchar(255) DEFAULT NULL,
+  `status` enum('active','suspended') NOT NULL DEFAULT 'active',
+  `date_joined` date NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `member_number` (`member_number`),
+  UNIQUE KEY `email` (`email`)
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- =====================================================================
--- STEP 3: Create the tables
--- =====================================================================
+LOCK TABLES `members` WRITE;
+/*!40000 ALTER TABLE `members` DISABLE KEYS */;
+INSERT INTO `members` (`id`, `member_number`, `full_name`, `email`, `phone`, `photo`, `status`, `date_joined`, `created_at`) VALUES
+(1,'MEM-001','John Bobson','jBobson@gmail.com','+11-55-095-101','m1794223547_a4ac0f37ec.jpg','active','2024-01-15','2026-11-02 12:34:43'),
+(2,'MEM-002','Tom Banners','tombanners@gmail.com','0740295289','m1794223274_fb5e1c4e49.jpg','active','2024-02-10','2026-11-02 12:34:43'),
+(3,'MEM-003','Lewis Stones','lewisstones@un.org.uk','+306-70-112-233','m1794223427_3e5d85b60b.jpg','active','2024-03-05','2026-11-02 12:34:43'),
+(4,'MEM-004','Abigail hardman','abigailhardman@gmail.com','+254-700-112233','m1794239838_43d36e7dbc.jpg','active','2024-04-12','2026-11-02 12:34:43'),
+(5,'MEM-005','David Phillips','davidphilips@gmail.com','+901-345-12-05',NULL,'suspended','2024-05-20','2026-11-02 12:34:43'),
+(6,'MEM-006','Emily Davis','emily.davis@gmail.com','+1-555-0106',NULL,'suspended','2024-06-01','2026-11-02 12:34:43'),
+(8,'MEM-008','Elizabeth Mpotya','elizmpotya@gmail.com.com','+256-725-55-0108','m1794223949_fd5217f38c.jpg','active','2024-07-04','2026-11-02 12:34:43'),
+(9,'MEM-009','Nikita Swims','nikitaswims@beautyservices.com','+09-225-225-509','m1794223697_4ad15915f7.jpg','active','2024-08-11','2026-11-02 12:34:43'),
+(14,'MEM-007','Ian Ace','ianace@gmail.com','07090078010','m1794239400_be0bb85af7.jpg','active','2026-11-09','2026-11-09 15:50:01'),
+(15,'MEM-010','Henry Amadrabo','henrya@gmail.com','0745173714','m1794239478_3c9b58a5a1.jpg','active','2026-11-09','2026-11-09 15:51:18'),
+(16,'MEM-011','Barbara Mukwaya','barbaram@gmail.com','+256 749 8978 00','m1794239701_72051eca24.jpg','active','2026-11-09','2026-11-09 15:54:06');
+/*!40000 ALTER TABLE `members` ENABLE KEYS */;
+UNLOCK TABLES;
+DROP TABLE IF EXISTS `users`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `users` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` varchar(50) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `full_name` varchar(150) NOT NULL,
+  `role` enum('admin','librarian') NOT NULL DEFAULT 'librarian',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `username` (`username`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
--- ---------------------------------------------------------------------
--- Table 1: authors  (people who write books)
--- ---------------------------------------------------------------------
-CREATE TABLE authors (
-    author_id  INT AUTO_INCREMENT PRIMARY KEY,  -- unique number, MySQL fills it in (1, 2, 3...)
-    name       VARCHAR(100) NOT NULL,           -- NOT NULL = this column cannot be left empty
-    country    VARCHAR(60)                      -- may be empty
-);
+LOCK TABLES `users` WRITE;
+/*!40000 ALTER TABLE `users` DISABLE KEYS */;
+INSERT INTO `users` (`id`, `username`, `password`, `full_name`, `role`, `created_at`) VALUES
+(1,'admin','$2y$10$e5JUJW7Co1NBjY.cJPx.Lu/xxwbTsYc0kZtowEyJICqRMY.kPmCrS','Abigail','admin','2026-11-02 12:34:43'),
+(2,'librarian','$2y$10$TQCWHLChcymEiD7.7gPxW.qe8YpUPEhZqqNXv75xShj3mNnmXC6oa','Alex','librarian','2026-11-02 12:34:43');
+/*!40000 ALTER TABLE `users` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
--- ---------------------------------------------------------------------
--- Table 2: categories  (types of books, e.g. Novel, Poetry)
--- ---------------------------------------------------------------------
-CREATE TABLE categories (
-    category_id  INT AUTO_INCREMENT PRIMARY KEY,
-    name         VARCHAR(60) NOT NULL UNIQUE,   -- UNIQUE = no two categories with the same name
-    description  VARCHAR(255)
-);
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- ---------------------------------------------------------------------
--- Table 3: books
---   author_id and category_id are FOREIGN KEYS: they point to a row
---   in the authors / categories tables instead of repeating the name.
--- ---------------------------------------------------------------------
-CREATE TABLE books (
-    book_id           INT AUTO_INCREMENT PRIMARY KEY,
-    isbn              VARCHAR(20)  NOT NULL UNIQUE,   -- every book has a different ISBN
-    title             VARCHAR(150) NOT NULL,
-    author_id         INT NOT NULL,
-    category_id       INT NOT NULL,
-    publisher         VARCHAR(100),
-    year_published    INT,
-    total_copies      INT NOT NULL DEFAULT 1,         -- DEFAULT = value used if none is given
-    available_copies  INT NOT NULL DEFAULT 1,
-
-    -- CHECK = a rule MySQL enforces on every insert/update
-    CHECK (total_copies >= 0),
-    CHECK (available_copies >= 0 AND available_copies <= total_copies),
-
-    -- Link to the parent tables.
-    -- ON DELETE RESTRICT = MySQL refuses to delete an author/category
-    -- that still has books (protects our data).
-    FOREIGN KEY (author_id)   REFERENCES authors(author_id)       ON DELETE RESTRICT,
-    FOREIGN KEY (category_id) REFERENCES categories(category_id)  ON DELETE RESTRICT
-);
-
--- ---------------------------------------------------------------------
--- Table 4: members  (people who borrow books)
--- ---------------------------------------------------------------------
-CREATE TABLE members (
-    member_id      INT AUTO_INCREMENT PRIMARY KEY,
-    member_number  VARCHAR(20)  NOT NULL UNIQUE,     -- e.g. MEM001, printed on the library card
-    full_name      VARCHAR(100) NOT NULL,
-    email          VARCHAR(100) NOT NULL UNIQUE,
-    phone          VARCHAR(20),
-    status         VARCHAR(10)  NOT NULL DEFAULT 'active',
-    date_joined    DATE NOT NULL,
-
-    -- status can only be one of these two words
-    CHECK (status IN ('active', 'suspended'))
-);
-
--- ---------------------------------------------------------------------
--- Table 5: loans  (which member borrowed which book, and when)
---   date_returned is NULL (empty) while the book is still out.
--- ---------------------------------------------------------------------
-CREATE TABLE loans (
-    loan_id        INT AUTO_INCREMENT PRIMARY KEY,
-    member_id      INT  NOT NULL,
-    book_id        INT  NOT NULL,
-    date_issued    DATE NOT NULL,
-    due_date       DATE NOT NULL,
-    date_returned  DATE NULL DEFAULT NULL,
-
-    CHECK (due_date >= date_issued),
-
-    -- ON DELETE RESTRICT: a member or book that appears in loans
-    -- cannot be deleted. Our PHP code will check this first and
-    -- show a friendly message instead of an error.
-    FOREIGN KEY (member_id) REFERENCES members(member_id) ON DELETE RESTRICT,
-    FOREIGN KEY (book_id)   REFERENCES books(book_id)     ON DELETE RESTRICT
-);
-
--- ---------------------------------------------------------------------
--- Table 6: users  (librarians who log in to the system)
---   We NEVER store the real password, only its hash
---   (made with PHP's password_hash()).
--- ---------------------------------------------------------------------
-CREATE TABLE users (
-    user_id        INT AUTO_INCREMENT PRIMARY KEY,
-    username       VARCHAR(50)  NOT NULL UNIQUE,
-    password_hash  VARCHAR(255) NOT NULL,
-    full_name      VARCHAR(100) NOT NULL,
-    role           VARCHAR(10)  NOT NULL DEFAULT 'librarian',
-
-    CHECK (role IN ('admin', 'librarian'))
-);
-
-
--- =====================================================================
--- STEP 4: Insert sample data
---   Parent tables first (authors, categories), then books,
---   because a book must point to an author and category that exist.
--- =====================================================================
-
--- 5 authors (they get author_id 1 to 5 in this order)
-INSERT INTO authors (name, country) VALUES
-('Chinua Achebe',            'Nigeria'),   -- 1
-('Ngugi wa Thiong''o',       'Kenya'),     -- 2  ('' = how you write an apostrophe inside text)
-('Chimamanda Ngozi Adichie', 'Nigeria'),   -- 3
-('Okot p''Bitek',            'Uganda'),    -- 4
-('George Orwell',            'United Kingdom'); -- 5
-
--- 5 categories (category_id 1 to 5)
-INSERT INTO categories (name, description) VALUES
-('Novel',              'Long fictional stories'),             -- 1
-('Poetry',             'Poems and songs'),                    -- 2
-('Historical Fiction', 'Stories set during real events'),     -- 3
-('Dystopian',          'Stories about a bad imagined future'),-- 4
-('Satire',             'Stories that mock society or power'); -- 5
-
--- 10 books (book_id 1 to 10). ISBNs are made-up sample values.
--- available_copies = total_copies minus the loans still out (see loans below)
-INSERT INTO books (isbn, title, author_id, category_id, publisher, year_published, total_copies, available_copies) VALUES
-('978-0-00-000001-0', 'Things Fall Apart',     1, 1, 'Heinemann',          1958, 5, 4), -- 1 (1 out)
-('978-0-00-000002-0', 'Arrow of God',          1, 1, 'Heinemann',          1964, 3, 2), -- 2 (1 out)
-('978-0-00-000003-0', 'Weep Not, Child',       2, 1, 'Heinemann',          1964, 4, 4), -- 3
-('978-0-00-000004-0', 'Petals of Blood',       2, 1, 'Heinemann',          1977, 2, 1), -- 4 (1 out)
-('978-0-00-000005-0', 'Purple Hibiscus',       3, 1, 'Fourth Estate',      2003, 1, 0), -- 5 (1 out -> 0 left, use it to test "cannot issue")
-('978-0-00-000006-0', 'Half of a Yellow Sun',  3, 3, 'Fourth Estate',      2006, 3, 2), -- 6 (1 out)
-('978-0-00-000007-0', 'Song of Lawino',        4, 2, 'East African Publishers', 1966, 4, 4), -- 7
-('978-0-00-000008-0', 'Song of Ocol',          4, 2, 'East African Publishers', 1970, 2, 2), -- 8
-('978-0-00-000009-0', 'Nineteen Eighty-Four',  5, 4, 'Secker & Warburg',   1949, 3, 2), -- 9 (1 out)
-('978-0-00-000010-0', 'Animal Farm',           5, 5, 'Secker & Warburg',   1945, 2, 2); -- 10
-
--- 10 members (member_id 1 to 10). Member 9 is suspended (to test that rule).
-INSERT INTO members (member_number, full_name, email, phone, status, date_joined) VALUES
-('MEM001', 'Aisha Nakato',     'aisha.nakato@example.com',     '0700000001', 'active',    '2026-01-10'), -- 1
-('MEM002', 'Brian Okello',     'brian.okello@example.com',     '0700000002', 'active',    '2026-01-15'), -- 2
-('MEM003', 'Catherine Atim',   'catherine.atim@example.com',   '0700000003', 'active',    '2026-02-01'), -- 3
-('MEM004', 'David Mugisha',    'david.mugisha@example.com',    '0700000004', 'active',    '2026-02-20'), -- 4
-('MEM005', 'Esther Namubiru',  'esther.namubiru@example.com',  '0700000005', 'active',    '2026-03-05'), -- 5
-('MEM006', 'Francis Ssempala', 'francis.ssempala@example.com', '0700000006', 'active',    '2026-03-18'), -- 6
-('MEM007', 'Grace Achieng',    'grace.achieng@example.com',    '0700000007', 'active',    '2026-04-02'), -- 7
-('MEM008', 'Henry Kato',       'henry.kato@example.com',       '0700000008', 'active',    '2026-05-11'), -- 8
-('MEM009', 'Irene Nansubuga',  'irene.nansubuga@example.com',  '0700000009', 'suspended', '2026-06-07'), -- 9
-('MEM010', 'James Opio',       'james.opio@example.com',       '0700000010', 'active',    '2026-07-21'); -- 10
-
--- 11 loans. Due date = issue date + 14 days.
---   5 returned (date_returned has a date)
---   6 still out (date_returned is NULL)
---   loans 6 and 7 are OVERDUE (due date has passed, not returned)
-INSERT INTO loans (member_id, book_id, date_issued, due_date, date_returned) VALUES
-(1,  1, '2026-09-01', '2026-09-15', '2026-09-14'),  -- 1  returned on time
-(2,  3, '2026-09-05', '2026-09-19', '2026-09-18'),  -- 2  returned on time
-(3,  6, '2026-09-10', '2026-09-24', '2026-09-30'),  -- 3  returned LATE
-(4,  7, '2026-09-20', '2026-10-04', '2026-10-02'),  -- 4  returned on time
-(5, 10, '2026-10-01', '2026-10-15', '2026-10-10'),  -- 5  returned on time
-(1,  2, '2026-10-05', '2026-10-19', NULL),          -- 6  still out - OVERDUE
-(6,  4, '2026-10-08', '2026-10-22', NULL),          -- 7  still out - OVERDUE
-(7,  1, '2026-10-20', '2026-11-03', NULL),          -- 8  still out
-(8,  6, '2026-10-25', '2026-11-08', NULL),          -- 9  still out
-(10, 9, '2026-10-27', '2026-11-10', NULL),          -- 10 still out
-(3,  5, '2026-10-28', '2026-11-11', NULL);          -- 11 still out (Purple Hibiscus now has 0 copies)
-
--- 2 test accounts for logging in. These are FAKE test passwords:
---   username: admin       password: admin123
---   username: librarian   password: librarian123
--- The long text starting with $2y$ is the hash made by password_hash().
-INSERT INTO users (username, password_hash, full_name, role) VALUES
-('admin',     '$2y$10$No1zDKCGNGNnkri/IbwpxeebE/aIoIrgUVTFvT0FgqTe7nln4wcpG', 'System Administrator', 'admin'),
-('librarian', '$2y$10$X8Ei8SSREm.gaXABR1t7Mu.91nN1wMHpG4eK3TIjDYQy/ilXSrYDy', 'Test Librarian',       'librarian');
