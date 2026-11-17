@@ -4,13 +4,13 @@ if (session_status() === PHP_SESSION_NONE) {
 }
 
 // e() = make text safe before printing it in HTML
-function e($text)
+function e(mixed $text): string
 {
-    return htmlspecialchars($text ?? '', ENT_QUOTES, 'UTF-8');
+    return htmlspecialchars((string) ($text ?? ''), ENT_QUOTES, 'UTF-8');
 }
 
 // Save a message to show on the NEXT page ('success' = green, 'danger' = red)
-function set_message($text, $type = 'success')
+function set_message(mixed $text, string $type = 'success'): void
 {
     $_SESSION['message'] = ['text' => $text, 'type' => $type];
 }
