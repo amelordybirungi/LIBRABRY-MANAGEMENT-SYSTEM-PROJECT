@@ -1,5 +1,5 @@
 **GitHub Repository:** [Library Management System](https://github.com/amelordybirungi/LIBRABRY-MANAGEMENT-SYSTEM-PROJECT)
-# Library Management System
+# Library Management System Group 14
 
 This  web-based Library Management System built with PHP and MySQL.The system is to bridge the gap between the librarian and administrator to manage library records through browsing the interface.
 staff manage books, authors, categories, members and loans, with secure login,

@@ -1,6 +1,3 @@
-
--- Library Management System database and sample data.
--- Import this file through phpMyAdmin or run it with MySQL.
 CREATE DATABASE IF NOT EXISTS `library_db`
   CHARACTER SET utf8mb4
   COLLATE utf8mb4_general_ci;
