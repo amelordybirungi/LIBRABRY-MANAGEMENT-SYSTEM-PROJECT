@@ -15,16 +15,12 @@ function set_message($text, $type = 'success')
     $_SESSION['message'] = ['text' => $text, 'type' => $type];
 }
 
-<<<<<<< HEAD
-=======
 // The "super admin" is the built-in account with username 'admin'.
 // Only the super admin may add, edit or delete system users.
 function is_super_admin()
 {
     return ($_SESSION['username'] ?? '') === 'admin';
 }
-
->>>>>>> 7c794f68c02dd4ad8dd351b3b3e2318287546479
 // Print the saved message once, then forget it.
 // It shows as a "toast" popup (top-right) that slides in and fades away by itself.
 // The small JS in footer.php auto-dismisses it after a few seconds.
