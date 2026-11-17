@@ -43,7 +43,15 @@ require_once __DIR__ . '/../includes/header.php';
                     <td><?= e($row['author_name']) ?></td>
                     <td><?= e($row['category_name']) ?></td>
                     <td><?= e($row['year_published']) ?></td>
-                    <td><?= (int) $row['available_copies'] ?> / <?= (int) $row['total_copies'] ?></td>
+                    <td>
+                        <?php $available = (int) $row['available_copies']; ?>
+                        <?= $available ?> / <?= (int) $row['total_copies'] ?>
+                        <?php if ($available <= 0): ?>
+                            <span class="badge badge-out-of-stock">Out of stock</span>
+                        <?php elseif ($available === 1): ?>
+                            <span class="badge badge-low-stock">Low stock</span>
+                        <?php endif; ?>
+                    </td>
                     <td>
                         <a class="btn btn-small" href="edit.php?id=<?= (int) $row['id'] ?>">Edit</a>
                         <!-- Delete is a small POST form so a click (not a link crawl) is needed -->
