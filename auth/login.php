@@ -99,10 +99,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <button type="submit" class="btn btn-block" style="margin-top:20px;">Login</button>
         </form>
-
-        <p class="auth-hint">
-            Test accounts: <b>admin / admin123</b> &nbsp;·&nbsp; <b>librarian / librarian123</b>
-        </p>
     </div>
 </div>
 

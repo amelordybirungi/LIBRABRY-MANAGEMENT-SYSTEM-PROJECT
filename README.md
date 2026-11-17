@@ -1,10 +1,9 @@
+**GitHub Repository:** [Library Management System](https://github.com/amelordybirungi/LIBRABRY-MANAGEMENT-SYSTEM-PROJECT)
 # Library Management System
 
-A web-based Library Management System built with PHP and MySQL. It lets library
+This  web-based Library Management System built with PHP and MySQL.The system is to bridge the gap between the librarian and administrator to manage library records through browsing the interface.
 staff manage books, authors, categories, members and loans, with secure login,
-role-based access and a live statistics dashboard.
-
-This project was developed as a group coursework project.
+it includes role-based access and a live statistics dashboard.
 
 ## Features
 
@@ -67,10 +66,13 @@ This project was developed as a group coursework project.
 ## Default Login
 
 Use the following account to sign in for the first time:
+ **Logins to admin **Account**
+- **Username:** `admin`
+- **Password:** `admin123`
 
-- **Username:** `PLACEHOLDER_USERNAME`
-- **Password:** `PLACEHOLDER_PASSWORD`
-
+ **Logins to librarian Account**
+ - **Username:** `librarian`
+- **Password:** `librarian123`
 > The `admin` account is the **super admin** and is the only user that can add,
 > edit or delete other system users.
 
@@ -108,18 +110,15 @@ Screenshots of the system are available in the `docs/screenshots/` folder.
 
 This project was developed by:
 
-1. 
-2. PLACEHOLDER_NAME_2
-3. PLACEHOLDER_NAME_3
-4. PLACEHOLDER_NAME_4
-5. PLACEHOLDER_NAME_5
-6. PLACEHOLDER_NAME_6
-7. PLACEHOLDER_NAME_7
-8. PLACEHOLDER_NAME_8
-9. PLACEHOLDER_NAME_9
-10. PLACEHOLDER_NAME_10
+1. Muwanguzi Gibroan Wejuli 262-141
+2. Erika Lawrence 255-867
+3. Okwri Philemon Samson 256-323
+4. Namaganda Victoria	257-109
+5. Birungi Amelordy	264-820
+6. Mandela Robert Danty	257-891
+7. Kakande Ismail	275-273
+8. Oketayot George William	224-649
+9. Abu Bakarr Samura	239-892
+10. Loboe Mohammed	233-274
 
-## Disclaimer
 
-This project was built for educational purposes as part of a coursework
-assignment.
